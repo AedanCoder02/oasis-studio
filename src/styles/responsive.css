@@ -40,9 +40,9 @@
     grid-template-columns: 1fr;
   }
 
-  /* Portfolio */
-  .portfolio-card {
-    width: min(340px, 76vw);
+  /* Portfolio — 2-col grid at tablet */
+  .portfolio-track {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .portfolio-section {
@@ -127,13 +127,13 @@
     text-align: center;
   }
 
-  /* Portfolio */
-  .portfolio-section {
-    padding: var(--space-40) 0;
+  /* Portfolio — 1-col grid on mobile */
+  .portfolio-track {
+    grid-template-columns: 1fr;
   }
 
-  .portfolio-card {
-    width: clamp(260px, 76vw, 320px);
+  .portfolio-section {
+    padding: var(--space-40) 0;
   }
 
   .frame-viewport {
@@ -179,10 +179,6 @@
   /* Portfolio */
   .portfolio-section {
     padding: var(--space-32) 0;
-  }
-
-  .portfolio-card {
-    width: clamp(240px, 84vw, 290px);
   }
 
   .frame-viewport {
