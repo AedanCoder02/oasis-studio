@@ -1,84 +1,81 @@
 // --- src/views/about.js ---
-// About view — clean functional layout per design.md
-// Semantic HTML, ARIA, keyboard-accessible cards, CSS classes (no inline styles)
 
 let tweens = [];
 
-/**
- * Mount the About view.
- */
 export function mount(container) {
   window.scrollTo(0, 0);
 
   container.innerHTML = `
-    <div class="services-page" role="main" aria-label="About Us">
-      <div class="section-header about-hero">
-        <h1 data-i18n="aboutPageTitle">About Us</h1>
-        <p data-i18n="aboutPageSub">We are a boutique creative studio that transforms brands into memorable experiences.</p>
-      </div>
+    <div class="view-page" role="main" aria-label="About Us">
+      <div class="view-page-inner">
+        <div class="section-header view-page-header">
+          <p class="section-eyebrow" data-i18n="aboutEyebrow">Who We Are</p>
+          <h1 data-i18n="aboutPageTitle">About Us</h1>
+          <p class="section-sub" data-i18n="aboutPageSub">A boutique creative studio transforming brands into memorable digital experiences.</p>
+        </div>
 
-      <div class="about-grid">
-        <!-- Mission -->
-        <article class="bento-card about-card" tabindex="0" role="article" aria-labelledby="about-mission">
-          <div class="about-icon about-icon--desert" aria-hidden="true">🎯</div>
-          <h3 id="about-mission" data-i18n="aboutMission">Mission</h3>
-          <p data-i18n="aboutMissionText">Build digital experiences that captivate, convert and scale, merging premium design with cutting-edge technology.</p>
-        </article>
+        <div class="about-feature-grid">
 
-        <!-- Vision -->
-        <article class="bento-card about-card" tabindex="0" role="article" aria-labelledby="about-vision">
-          <div class="about-icon about-icon--oasis" aria-hidden="true">🔭</div>
-          <h3 id="about-vision" data-i18n="aboutVision">Vision</h3>
-          <p data-i18n="aboutVisionText">To be the go-to studio for companies seeking an extraordinary digital presence in Latin America.</p>
-        </article>
+          <div class="feature-card" tabindex="0" role="article">
+            <div class="feature-card-top">
+              <span class="feature-number">01</span>
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+              </div>
+            </div>
+            <h3 data-i18n="aboutMission">Mission</h3>
+            <p data-i18n="aboutMissionText">Build digital experiences that captivate, convert and scale, merging premium design with cutting-edge technology.</p>
+          </div>
 
-        <!-- Values -->
-        <article class="bento-card about-card" tabindex="0" role="article" aria-labelledby="about-values">
-          <div class="about-icon about-icon--tech" aria-hidden="true">✦</div>
-          <h3 id="about-values" data-i18n="aboutValues">Values</h3>
-          <ul class="values-list" role="list">
-            <li>
-              <span class="value-dot value-dot--desert" aria-hidden="true"></span>
-              <span data-i18n="aboutValue1">Visual Excellence</span>
-            </li>
-            <li>
-              <span class="value-dot value-dot--oasis" aria-hidden="true"></span>
-              <span data-i18n="aboutValue2">Technological Innovation</span>
-            </li>
-            <li>
-              <span class="value-dot value-dot--tech" aria-hidden="true"></span>
-              <span data-i18n="aboutValue3">Measurable Impact</span>
-            </li>
-          </ul>
-        </article>
+          <div class="feature-card" tabindex="0" role="article">
+            <div class="feature-card-top">
+              <span class="feature-number">02</span>
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </div>
+            </div>
+            <h3 data-i18n="aboutVision">Vision</h3>
+            <p data-i18n="aboutVisionText">To be the go-to studio for companies seeking an extraordinary digital presence in Latin America and beyond.</p>
+          </div>
+
+          <div class="feature-card" tabindex="0" role="article">
+            <div class="feature-card-top">
+              <span class="feature-number">03</span>
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+              </div>
+            </div>
+            <h3 data-i18n="aboutValues">Values</h3>
+            <ul class="feature-values-list">
+              <li data-i18n="aboutValue1">Visual Excellence</li>
+              <li data-i18n="aboutValue2">Technological Innovation</li>
+              <li data-i18n="aboutValue3">Measurable Impact</li>
+            </ul>
+          </div>
+
+        </div>
       </div>
     </div>
   `;
 
-  // Stagger entrance
   requestAnimationFrame(() => {
     const { gsap } = window;
     if (!gsap) return;
-
-    const cards = container.querySelectorAll('.about-card');
-    const tween = gsap.from(cards, {
-      y: 40,
-      opacity: 0,
-      duration: 0.6,
-      stagger: 0.1,
-      ease: 'power3.out',
-    });
-    tweens.push(tween);
+    const els = container.querySelectorAll('.feature-card');
+    tweens.push(gsap.from(els, { y: 30, opacity: 0, duration: 0.5, stagger: 0.12, ease: 'power3.out' }));
   });
 }
 
-/**
- * Unmount — kill GSAP tweens.
- */
 export function unmount() {
   const { gsap } = window;
-  if (gsap) {
-    tweens.forEach((t) => t.kill());
-  }
+  if (gsap) tweens.forEach(t => t.kill());
   tweens = [];
 }
