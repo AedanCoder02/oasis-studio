@@ -1,0 +1,40 @@
+{
+  "services": [
+    {
+      "id": "branding",
+      "icon": "🎯",
+      "titleKey": "bentoTitle1",
+      "descKey": "bentoDesc1",
+      "microInteraction": "radar",
+      "accent": "#D96A29",
+      "tag": "Strategy"
+    },
+    {
+      "id": "web-design",
+      "icon": "⚡",
+      "titleKey": "bentoTitle2",
+      "descKey": "bentoDesc2",
+      "microInteraction": "terminal",
+      "accent": "#61afef",
+      "tag": "Development"
+    },
+    {
+      "id": "content-managing",
+      "icon": "🌐",
+      "titleKey": "bentoTitle3",
+      "descKey": "bentoDesc3",
+      "microInteraction": "nodes",
+      "accent": "#30cf99",
+      "tag": "Distribution"
+    },
+    {
+      "id": "solutions",
+      "icon": "🚀",
+      "titleKey": "bentoTitle4",
+      "descKey": "bentoDesc4",
+      "microInteraction": "checks",
+      "accent": "#e053c8",
+      "tag": "Growth"
+    }
+  ]
+}

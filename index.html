@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oasis Studio | Immersive Digital Experience</title>
+  <meta name="description" content="Oasis Studio — Boutique creative studio specializing in branding, web design, and content strategy. Navigate your desert, find your oasis.">
+
+  <!-- Critical inline styles: skeleton + route-transition (zero latency, no bundle dependency) -->
+  <style>
+    #skeleton-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      pointer-events: none;
+    }
+    #skeleton-screen.sk-done {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    .sk-block {
+      border-radius: 4px;
+      background: linear-gradient(
+        90deg,
+        rgba(255,255,255,0.04) 0%,
+        rgba(242,184,128,0.12) 50%,
+        rgba(255,255,255,0.04) 100%
+      );
+      background-size: 300% 100%;
+      animation: sk-shine 1.8s ease-in-out infinite;
+    }
+    @keyframes sk-shine {
+      0%   { background-position: 100% 0; }
+      100% { background-position: -100% 0; }
+    }
+    .sk-nav {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      padding: 0 32px;
+      gap: 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      flex-shrink: 0;
+    }
+    .sk-spacer { flex: 1; }
+    .sk-hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 clamp(24px, 10vw, 120px);
+      gap: 18px;
+    }
+    .sk-btns { display: flex; gap: 12px; margin-top: 10px; }
+    #app-root { transition: opacity 0.22s ease; }
+    @media (max-width: 768px) {
+      .sk-nav-links { display: none; }
+      .sk-nav { padding: 0 20px; }
+      .sk-hero { padding: 0 24px; }
+    }
+  </style>
+
+  <!-- GSAP (CDN — persistent globals) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+  <!-- Typography: Plus Jakarta Sans + DM Serif Display (Logo) -->
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Skeleton loading screen: renders immediately before any JS/CSS bundle loads -->
+  <div id="skeleton-screen" aria-hidden="true">
+    <div class="sk-nav">
+      <div class="sk-block" style="width:130px;height:34px;border-radius:50px;flex-shrink:0"></div>
+      <div class="sk-spacer"></div>
+      <div class="sk-nav-links" style="display:flex;gap:28px;align-items:center">
+        <div class="sk-block" style="width:44px;height:13px;border-radius:50px"></div>
+        <div class="sk-block" style="width:64px;height:13px;border-radius:50px"></div>
+        <div class="sk-block" style="width:50px;height:13px;border-radius:50px"></div>
+        <div class="sk-block" style="width:56px;height:13px;border-radius:50px"></div>
+      </div>
+      <div class="sk-block" style="width:44px;height:34px;border-radius:50px;flex-shrink:0"></div>
+    </div>
+    <div class="sk-hero">
+      <div class="sk-block" style="width:120px;height:11px;border-radius:50px;opacity:.65"></div>
+      <div class="sk-block" style="width:min(480px,78vw);height:68px;border-radius:6px"></div>
+      <div class="sk-block" style="width:min(340px,68vw);height:34px;border-radius:6px;opacity:.8"></div>
+      <div class="sk-block" style="width:min(280px,58vw);height:17px;border-radius:50px;opacity:.55"></div>
+      <div class="sk-btns">
+        <div class="sk-block" style="width:190px;height:50px;border-radius:50px"></div>
+        <div class="sk-block" style="width:158px;height:50px;border-radius:50px;opacity:.7"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skip to Content (WCAG 2.2 AA) -->
+  <a href="#app-root" class="skip-to-content">Skip to content</a>
+
+  <!-- ======================================
+       PERSISTENT LAYER: Mesh Gradient Background
+       ====================================== -->
+  <div class="ambient-background"></div>
+  <div class="grain-overlay"></div>
+
+  <div id="blob-container">
+    <div class="mesh-blob blob-1"></div>
+    <div class="mesh-blob blob-2"></div>
+    <div class="mesh-blob blob-3"></div>
+    <div class="mesh-blob blob-4"></div>
+    <div class="mesh-blob blob-5"></div>
+  </div>
+
+  <!-- ======================================
+       PERSISTENT LAYER: Navigation
+       ====================================== -->
+  <nav>
+    <a href="#home" class="logo" data-route="#home">
+      <img src="/logo-white.png" alt="Oasis Studio" class="logo-img">
+    </a>
+
+    <!-- Mobile Hamburger -->
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <ul class="nav-links">
+      <li><a href="#home" data-route="#home" data-i18n="navHome">Home</a></li>
+      <li>
+        <a href="#services" data-route="#services" data-i18n="navServices">Services</a>
+        <ul class="dropdown">
+          <li><a href="#services" data-route="#services" data-i18n="serv1">Branding</a></li>
+          <li><a href="#services" data-route="#services" data-i18n="serv2">Web Design</a></li>
+          <li><a href="#services" data-route="#services" data-i18n="serv3">Content-Managing</a></li>
+        </ul>
+      </li>
+      <li><a href="#about" data-route="#about" data-i18n="navAbout">About</a></li>
+      <li><a href="#contact" data-route="#contact" data-i18n="navContact">Contact</a></li>
+    </ul>
+
+    <button class="btn-lang" id="langToggle">EN</button>
+  </nav>
+
+  <!-- ======================================
+       DYNAMIC LAYER: View Injection Target
+       ====================================== -->
+  <main id="app-root"></main>
+
+  <!-- ======================================
+       PERSISTENT LAYER: Footer
+       ====================================== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="#home" data-route="#home" class="logo footer-logo">
+          <img src="/logo-white.png" alt="Oasis Studio" class="logo-img logo-img--footer">
+        </a>
+        <p class="footer-tagline" data-i18n="footerTagline">Boutique creative studio that transforms brands into extraordinary digital experiences.</p>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footerNavigation">Navigation</h4>
+        <ul>
+          <li><a href="#home" data-route="#home" data-i18n="navHome">Home</a></li>
+          <li><a href="#services" data-route="#services" data-i18n="navServices">Services</a></li>
+          <li><a href="#about" data-route="#about" data-i18n="navAbout">About</a></li>
+          <li><a href="#contact" data-route="#contact" data-i18n="navContact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footerServices">Services</h4>
+        <ul>
+          <li><a href="#services" data-route="#services" data-i18n="serv1">Branding</a></li>
+          <li><a href="#services" data-route="#services" data-i18n="serv2">Web Design</a></li>
+          <li><a href="#services" data-route="#services" data-i18n="serv3">Content Management</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footerConnect">Connect</h4>
+        <ul>
+          <li><a href="mailto:hello@oasisstudio.co">hello@oasisstudio.co</a></li>
+          <li><a href="#" aria-label="Instagram">Instagram</a></li>
+          <li><a href="#" aria-label="LinkedIn">LinkedIn</a></li>
+          <li><a href="#" aria-label="Behance">Behance</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Oasis Studio. All rights reserved.</span>
+      <a href="#" data-i18n="footerPrivacy">Privacy Policy</a>
+    </div>
+  </footer>
+
+  <!-- ======================================
+       APPLICATION ENTRY POINT (ES Module)
+       ====================================== -->
+  <script type="module" src="/src/main.js"></script>
+
+</body>
+</html>
