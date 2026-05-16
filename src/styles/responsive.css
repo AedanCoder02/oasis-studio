@@ -4,6 +4,17 @@
 
 /* ---- Tablet (max-width: 1024px) ---- */
 @media (max-width: 1024px) {
+  .about-feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-view .form-row {
+    grid-template-columns: 1fr;
+  }
   .bento-grid {
     grid-template-columns: 1fr 1fr;
     height: auto;
@@ -152,6 +163,19 @@
   .feature-card {
     padding: var(--space-24);
   }
+
+  /* View pages */
+  .view-page {
+    padding: 100px 1.5rem var(--space-48);
+  }
+
+  .view-page-header {
+    margin-bottom: var(--space-40);
+  }
+
+  .contact-view .contact-form {
+    padding: var(--space-24);
+  }
 }
 
 /* ---- Small Mobile (max-width: 480px) ---- */
@@ -215,5 +239,14 @@
   /* Process steps */
   .process-step {
     padding: var(--space-24);
+  }
+
+  /* View pages */
+  .view-page {
+    padding: 90px 1.25rem var(--space-40);
+  }
+
+  .contact-view .form-row {
+    grid-template-columns: 1fr;
   }
 }
