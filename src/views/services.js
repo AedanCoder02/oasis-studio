@@ -1,168 +1,61 @@
 // --- src/views/services.js ---
-// Data-driven Bento Grid — clean functional layout per design.md
-// Cards with proper ARIA, keyboard support, and semantic states
-
 import servicesData from '../data/services.json';
-import { t } from '../i18n.js';
 
 let tweens = [];
-let hoverListeners = [];
 
-/**
- * Generate the micro-interaction HTML for a given type.
- */
-function getMicroInteraction(type) {
-  switch (type) {
-    case 'radar':
-      return `<div class="mic-radar" aria-hidden="true"></div>`;
+const ICONS = {
+  'branding': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>`,
+  'web-design': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="8" x2="22" y2="8"/><polyline points="7 13 10 16 7 19"/><line x1="13" y1="19" x2="17" y2="19"/></svg>`,
+  'content-managing': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>`,
+  'solutions': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>`,
+};
 
-    case 'terminal':
-      return `
-        <div class="mic-terminal" aria-hidden="true">
-          <div><span class="line-1">const</span> <span class="line-2">elevateBrand</span> = <span class="line-1">async</span> () =&gt; {</div>
-          <div style="padding-left:15px">await <span class="line-2">design</span>({ <br>&nbsp;&nbsp;ux: <span class="line-3">"premium"</span><br>});</div>
-          <div>} <span class="cursor"></span></div>
-        </div>`;
+const NUMS = ['01', '02', '03', '04'];
 
-    case 'nodes':
-      return `
-        <div class="mic-nodes" aria-hidden="true">
-          <svg viewBox="0 0 300 100">
-            <path class="node-path" fill="none" stroke-width="2" d="M30,50 Q100,10 150,50 T270,50" />
-            <circle class="node-circle" cx="30" cy="50" r="6" />
-            <circle class="node-circle nc2" cx="150" cy="50" r="6" />
-            <circle class="node-circle nc3" cx="270" cy="50" r="6" />
-          </svg>
-        </div>`;
-
-    case 'checks':
-      return `
-        <div class="mic-checks" aria-hidden="true">
-          <div class="checks-track">
-            <div class="check-item">
-              <svg class="check-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-              <span data-i18n="check1">Scalable Architecture</span>
-            </div>
-            <div class="check-item">
-              <svg class="check-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-              <span data-i18n="check2">SEO Optimization</span>
-            </div>
-            <div class="check-item">
-              <svg class="check-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-              <span data-i18n="check3">Conversion Rate</span>
-            </div>
-            <div class="check-item">
-              <svg class="check-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-              <span data-i18n="check1">Scalable Architecture</span>
-            </div>
-          </div>
-        </div>`;
-
-    default:
-      return '';
-  }
-}
-
-/**
- * Render a single service card with ARIA attributes.
- */
-function renderCard(service, index) {
+function renderCard(service, i) {
   return `
-    <article
-      class="bento-card"
-      id="service-${service.id}"
-      data-accent="${service.accent}"
-      tabindex="0"
-      role="article"
-      aria-labelledby="service-title-${service.id}"
-    >
-      <div class="service-icon" style="background: ${service.accent}15; color: ${service.accent};">
-        ${service.icon}
+    <div class="feature-card" tabindex="0" role="article" aria-labelledby="svc-${service.id}">
+      <div class="feature-card-top">
+        <span class="feature-number">${NUMS[i]}</span>
+        <div class="feature-icon">${ICONS[service.id] || ''}</div>
       </div>
-      <h3 id="service-title-${service.id}" data-i18n="${service.titleKey}">${service.titleKey}</h3>
+      <h3 id="svc-${service.id}" data-i18n="${service.titleKey}">${service.titleKey}</h3>
       <p data-i18n="${service.descKey}">${service.descKey}</p>
-      ${getMicroInteraction(service.microInteraction)}
-      <span class="service-tag">${service.tag}</span>
-    </article>
+      <span class="feature-badge">${service.tag}</span>
+    </div>
   `;
 }
 
-/**
- * Mount the Services view.
- */
 export function mount(container) {
   window.scrollTo(0, 0);
 
   const cards = servicesData.services.map(renderCard).join('');
 
   container.innerHTML = `
-    <div class="services-page" role="main" aria-label="Services">
-      <div class="section-header">
-        <h1 data-i18n="servicesPageTitle">Our Services</h1>
-        <p data-i18n="servicesPageSub">Comprehensive solutions designed to boost your digital presence.</p>
-      </div>
-      <div class="services-bento">
-        ${cards}
+    <div class="view-page" role="main" aria-label="Services">
+      <div class="view-page-inner">
+        <div class="section-header view-page-header">
+          <p class="section-eyebrow" data-i18n="servicesEyebrow">What We Do</p>
+          <h1 data-i18n="servicesPageTitle">Our Services</h1>
+          <p class="section-sub" data-i18n="servicesPageSub">Comprehensive solutions designed to elevate your digital presence.</p>
+        </div>
+        <div class="services-feature-grid">
+          ${cards}
+        </div>
       </div>
     </div>
   `;
 
-  // Entrance stagger animation
   requestAnimationFrame(() => {
     const { gsap } = window;
     if (!gsap) return;
-
-    const cardEls = container.querySelectorAll('.bento-card');
-    const tween = gsap.from(cardEls, {
-      y: 40,
-      opacity: 0,
-      duration: 0.6,
-      stagger: 0.1,
-      ease: 'power3.out',
-    });
-    tweens.push(tween);
-
-    // Subtle glow hover per card accent
-    cardEls.forEach((card) => {
-      const accent = card.dataset.accent;
-      const onEnter = () => {
-        gsap.to(card, {
-          boxShadow: `0 8px 40px ${accent}22, inset 0 0 0 1px ${accent}33`,
-          duration: 0.3,
-        });
-      };
-      const onLeave = () => {
-        gsap.to(card, {
-          boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
-          duration: 0.3,
-        });
-      };
-      card.addEventListener('mouseenter', onEnter);
-      card.addEventListener('mouseleave', onLeave);
-      // Also trigger on focus for keyboard users
-      card.addEventListener('focus', onEnter);
-      card.addEventListener('blur', onLeave);
-      hoverListeners.push({ el: card, onEnter, onLeave });
-    });
+    const els = container.querySelectorAll('.feature-card');
+    tweens.push(gsap.from(els, { y: 30, opacity: 0, duration: 0.5, stagger: 0.1, ease: 'power3.out' }));
   });
 }
 
-/**
- * Unmount — kill GSAP tweens and remove listeners.
- */
 export function unmount() {
   const { gsap } = window;
-  if (gsap) {
-    tweens.forEach((t) => t.kill());
-  }
+  if (gsap) tweens.forEach(t => t.kill());
   tweens = [];
-
-  // Clean up hover/focus listeners
-  hoverListeners.forEach(({ el, onEnter, onLeave }) => {
-    el.removeEventListener('mouseenter', onEnter);
-    el.removeEventListener('mouseleave', onLeave);
-    el.removeEventListener('focus', onEnter);
-    el.removeEventListener('blur', onLeave);
-  });
-  hoverListeners = [];
 }
