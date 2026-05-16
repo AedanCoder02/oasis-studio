@@ -164,6 +164,66 @@ function getTemplate() {
             </div>
           </div>
 
+          <div class="portfolio-card">
+            <div class="preview-frame">
+              <div class="frame-chrome">
+                <div class="chrome-dots"><span></span><span></span><span></span></div>
+                <div class="chrome-bar"><span class="chrome-url-text">link coming soon</span></div>
+              </div>
+              <div class="frame-viewport fp-gradient-5">
+                <div class="fp-overlay"></div>
+                <div class="fp-hero-content">
+                  <div class="fp-line fp-line--eyebrow"></div>
+                  <div class="fp-line fp-line--h1"></div>
+                  <div class="fp-line fp-line--h1 fp-line--short"></div>
+                  <div class="fp-line fp-line--sub"></div>
+                  <div class="fp-line fp-line--cta"></div>
+                </div>
+              </div>
+            </div>
+            <div class="portfolio-meta">
+              <div class="portfolio-info">
+                <p class="portfolio-name">Project Five</p>
+                <p class="portfolio-tags">SEO · Analytics</p>
+              </div>
+              <a href="#" class="portfolio-visit" aria-label="Visit project" tabindex="-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="portfolio-card">
+            <div class="preview-frame">
+              <div class="frame-chrome">
+                <div class="chrome-dots"><span></span><span></span><span></span></div>
+                <div class="chrome-bar"><span class="chrome-url-text">link coming soon</span></div>
+              </div>
+              <div class="frame-viewport fp-gradient-6">
+                <div class="fp-overlay"></div>
+                <div class="fp-hero-content">
+                  <div class="fp-line fp-line--eyebrow"></div>
+                  <div class="fp-line fp-line--h1"></div>
+                  <div class="fp-line fp-line--h1 fp-line--short"></div>
+                  <div class="fp-line fp-line--sub"></div>
+                  <div class="fp-line fp-line--cta"></div>
+                </div>
+              </div>
+            </div>
+            <div class="portfolio-meta">
+              <div class="portfolio-info">
+                <p class="portfolio-name">Project Six</p>
+                <p class="portfolio-tags">Mobile · Design</p>
+              </div>
+              <a href="#" class="portfolio-visit" aria-label="Visit project" tabindex="-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
