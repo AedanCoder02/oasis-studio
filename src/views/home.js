@@ -1,12 +1,8 @@
 // --- src/views/home.js ---
 // Landing page: Hero → Clients → Services Grid → Process → Testimonials → CTA
-// Standard vertical flow with scroll-reveal animations
 
 let observers = [];
 
-/**
- * Generate the Home view HTML.
- */
 function getTemplate() {
   return `
     <!-- Hero Section -->
@@ -61,68 +57,90 @@ function getTemplate() {
       </div>
     </section>
 
-    <!-- Services Bento Grid -->
+    <!-- Services Feature Grid -->
     <section class="home-services-section" id="home-services">
       <div class="section-inner">
-        <div class="section-header reveal">
+        <div class="section-header">
           <p class="section-eyebrow" data-i18n="servicesEyebrow">What We Do</p>
           <h2 data-i18n="servicesHeading">Engineered for Impact</h2>
         </div>
-        <div class="bento-grid reveal">
-          <!-- Card 1: Branding -->
-          <div class="bento-card">
-            <h3 data-i18n="bentoTitle1">Branding</h3>
-            <p data-i18n="bentoDesc1">Identify market needs with precision through our brand radar analysis.</p>
-            <div class="mic-radar"></div>
-          </div>
-          <!-- Card 2: Web Design -->
-          <div class="bento-card">
-            <h3 data-i18n="bentoTitle2">Web Design</h3>
-            <p data-i18n="bentoDesc2">Immersive and performing code environments to elevate your app.</p>
-            <div class="mic-terminal">
-              <div><span class="line-1">const</span> <span class="line-2">elevateBrand</span> = <span class="line-1">async</span> () =&gt; {</div>
-              <div style="padding-left:15px">await <span class="line-2">design</span>({ <br>&nbsp;&nbsp;ux: <span class="line-3">"premium"</span><br>});</div>
-              <div>} <span class="cursor"></span></div>
-            </div>
-          </div>
-          <!-- Card 3: Content -->
-          <div class="bento-card">
-            <h3 data-i18n="bentoTitle3">Content Managing</h3>
-            <p data-i18n="bentoDesc3">Interconnected nodes to distribute your message on every platform.</p>
-            <div class="mic-nodes">
-              <svg viewBox="0 0 300 100">
-                <path class="node-path" fill="none" stroke-width="2" d="M30,50 Q100,10 150,50 T270,50" />
-                <circle class="node-circle" cx="30" cy="50" r="6" />
-                <circle class="node-circle nc2" cx="150" cy="50" r="6" />
-                <circle class="node-circle nc3" cx="270" cy="50" r="6" />
-              </svg>
-            </div>
-          </div>
-          <!-- Card 4: Solutions -->
-          <div class="bento-card">
-            <h3 data-i18n="bentoTitle4">Our Solutions</h3>
-            <p data-i18n="bentoDesc4">Guaranteed workflows that generate real impact.</p>
-            <div class="mic-checks">
-              <div class="checks-track">
-                <div class="check-item">
-                  <svg class="check-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                  <span data-i18n="check1">Scalable Architecture</span>
-                </div>
-                <div class="check-item">
-                  <svg class="check-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                  <span data-i18n="check2">SEO Optimization</span>
-                </div>
-                <div class="check-item">
-                  <svg class="check-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                  <span data-i18n="check3">Conversion Rate</span>
-                </div>
-                <div class="check-item">
-                  <svg class="check-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                  <span data-i18n="check1">Scalable Architecture</span>
-                </div>
+        <div class="services-feature-grid">
+
+          <!-- 01: Branding -->
+          <div class="feature-card">
+            <div class="feature-card-top">
+              <span class="feature-number">01</span>
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <circle cx="12" cy="12" r="5"/>
+                  <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>
+                  <line x1="12" y1="2" x2="12" y2="5"/>
+                  <line x1="12" y1="19" x2="12" y2="22"/>
+                  <line x1="2" y1="12" x2="5" y2="12"/>
+                  <line x1="19" y1="12" x2="22" y2="12"/>
+                </svg>
               </div>
             </div>
+            <h3 data-i18n="bentoTitle1">Branding</h3>
+            <p data-i18n="bentoDesc1">Identify market needs with precision through our brand radar analysis.</p>
           </div>
+
+          <!-- 02: Web Design -->
+          <div class="feature-card">
+            <div class="feature-card-top">
+              <span class="feature-number">02</span>
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="3" width="20" height="18" rx="2"/>
+                  <line x1="2" y1="8" x2="22" y2="8"/>
+                  <polyline points="7 13 10 16 7 19"/>
+                  <line x1="13" y1="19" x2="17" y2="19"/>
+                </svg>
+              </div>
+            </div>
+            <h3 data-i18n="bentoTitle2">Web Design</h3>
+            <p data-i18n="bentoDesc2">Immersive and performing code environments to elevate your app.</p>
+          </div>
+
+          <!-- 03: Content Managing -->
+          <div class="feature-card">
+            <div class="feature-card-top">
+              <span class="feature-number">03</span>
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="18" cy="5" r="3"/>
+                  <circle cx="6" cy="12" r="3"/>
+                  <circle cx="18" cy="19" r="3"/>
+                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                  <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                </svg>
+              </div>
+            </div>
+            <h3 data-i18n="bentoTitle3">Content Managing</h3>
+            <p data-i18n="bentoDesc3">Interconnected nodes to distribute your message on every platform.</p>
+          </div>
+
+          <!-- 04: Solutions -->
+          <div class="feature-card">
+            <div class="feature-card-top">
+              <span class="feature-number">04</span>
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <polyline points="9 12 11 14 15 10"/>
+                </svg>
+              </div>
+            </div>
+            <h3 data-i18n="bentoTitle4">Our Solutions</h3>
+            <p data-i18n="bentoDesc4">Guaranteed workflows that generate real impact.</p>
+            <ul class="feature-list">
+              <li data-i18n="check1">Scalable Architecture</li>
+              <li data-i18n="check2">SEO Optimization</li>
+              <li data-i18n="check3">Conversion Rate</li>
+            </ul>
+          </div>
+
         </div>
       </div>
     </section>
@@ -223,9 +241,6 @@ function getTemplate() {
   `;
 }
 
-/**
- * Animate stat numbers counting up
- */
 function animateStats(container) {
   container.querySelectorAll('.stat-number').forEach(el => {
     const target = parseInt(el.dataset.target, 10);
@@ -233,7 +248,7 @@ function animateStats(container) {
     const start = performance.now();
     function step(now) {
       const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
       el.textContent = Math.floor(eased * target);
       if (progress < 1) requestAnimationFrame(step);
     }
@@ -241,9 +256,6 @@ function animateStats(container) {
   });
 }
 
-/**
- * Set up IntersectionObserver for scroll-reveal animations
- */
 function setupScrollReveal(container) {
   const revealElements = container.querySelectorAll('.reveal');
 
@@ -251,7 +263,6 @@ function setupScrollReveal(container) {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('revealed');
-        // If stats section, trigger counter animation
         if (entry.target.closest('.stats-section')) {
           animateStats(entry.target);
         }
@@ -264,14 +275,10 @@ function setupScrollReveal(container) {
   observers.push(observer);
 }
 
-/**
- * Mount the Home view into a container.
- */
 export function mount(container) {
   window.scrollTo(0, 0);
   container.innerHTML = getTemplate();
 
-  // Bind SPA navigation for any data-route links inside this view
   container.querySelectorAll('a[data-route]').forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
@@ -279,13 +286,9 @@ export function mount(container) {
     });
   });
 
-  // Setup scroll-reveal animations
   requestAnimationFrame(() => setupScrollReveal(container));
 }
 
-/**
- * Unmount the Home view.
- */
 export function unmount() {
   observers.forEach(obs => obs.disconnect());
   observers = [];
