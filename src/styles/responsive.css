@@ -39,6 +39,24 @@
   .form-row {
     grid-template-columns: 1fr;
   }
+
+  /* Portfolio */
+  .portfolio-card {
+    width: min(340px, 76vw);
+  }
+
+  .portfolio-section {
+    padding: var(--space-48) 0;
+  }
+
+  /* Feature grid — stays 2-col at tablet, tighter padding */
+  .feature-card {
+    padding: var(--space-32);
+  }
+
+  .home-services-section {
+    padding: var(--space-48) 0;
+  }
 }
 
 /* ---- Mobile (max-width: 768px) ---- */
@@ -81,6 +99,10 @@
     text-align: center;
   }
 
+  .clients-section {
+    padding: var(--space-32) 2rem;
+  }
+
   .clients-track {
     gap: 1.5rem;
   }
@@ -104,6 +126,32 @@
     gap: var(--space-7);
     text-align: center;
   }
+
+  /* Portfolio */
+  .portfolio-section {
+    padding: var(--space-40) 0;
+  }
+
+  .portfolio-card {
+    width: clamp(260px, 76vw, 320px);
+  }
+
+  .frame-viewport {
+    height: 185px;
+  }
+
+  /* Feature grid — collapse to single column */
+  .services-feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-services-section {
+    padding: var(--space-40) 0;
+  }
+
+  .feature-card {
+    padding: var(--space-24);
+  }
 }
 
 /* ---- Small Mobile (max-width: 480px) ---- */
@@ -126,5 +174,50 @@
 
   .hero-section {
     padding: 0 1.5rem;
+  }
+
+  /* Portfolio */
+  .portfolio-section {
+    padding: var(--space-32) 0;
+  }
+
+  .portfolio-card {
+    width: clamp(240px, 84vw, 290px);
+  }
+
+  .frame-viewport {
+    height: 160px;
+  }
+
+  .fp-hero-content {
+    padding: 0 var(--space-16);
+  }
+
+  .fp-line--h1 {
+    height: 14px;
+  }
+
+  .fp-line--cta {
+    height: 22px;
+  }
+
+  /* Feature grid */
+  .feature-card {
+    padding: var(--space-20) var(--space-24);
+  }
+
+  .feature-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* Stats tighter on tiny screens */
+  .stats-section {
+    padding: var(--space-48) 1.5rem;
+  }
+
+  /* Process steps */
+  .process-step {
+    padding: var(--space-24);
   }
 }
