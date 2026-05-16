@@ -700,7 +700,6 @@
   padding: var(--space-64) 0;
   position: relative;
   z-index: 2;
-  overflow: hidden;
 }
 
 .portfolio-header {
@@ -713,6 +712,14 @@
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   padding-bottom: var(--space-8);
+  /* Right-edge fade so users know there's more to scroll */
+  -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+  mask-image: linear-gradient(to right, black 85%, transparent 100%);
+  cursor: grab;
+}
+
+.portfolio-track-wrap:active {
+  cursor: grabbing;
 }
 
 .portfolio-track-wrap::-webkit-scrollbar {
