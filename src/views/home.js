@@ -1,5 +1,5 @@
 // --- src/views/home.js ---
-// Landing page: Hero → Clients → Services Grid → Process → Testimonials → CTA
+// Landing page: Hero → Clients → Portfolio → Stats → Services Grid → Process → Testimonials → CTA
 
 let observers = [];
 
@@ -35,6 +35,139 @@ function getTemplate() {
       </div>
     </section>
 
+    <!-- Portfolio Preview Section -->
+    <section class="portfolio-section" id="portfolio">
+      <div class="portfolio-header section-inner">
+        <p class="section-eyebrow" data-i18n="portfolioEyebrow">Selected Work</p>
+        <h2 data-i18n="portfolioHeading">Built for the Bold</h2>
+      </div>
+      <div class="portfolio-track-wrap">
+        <div class="portfolio-track">
+
+          <div class="portfolio-card">
+            <div class="preview-frame">
+              <div class="frame-chrome">
+                <div class="chrome-dots"><span></span><span></span><span></span></div>
+                <div class="chrome-bar"><span class="chrome-url-text">link coming soon</span></div>
+              </div>
+              <div class="frame-viewport fp-gradient-1">
+                <div class="fp-overlay"></div>
+                <div class="fp-hero-content">
+                  <div class="fp-line fp-line--eyebrow"></div>
+                  <div class="fp-line fp-line--h1"></div>
+                  <div class="fp-line fp-line--h1 fp-line--short"></div>
+                  <div class="fp-line fp-line--sub"></div>
+                  <div class="fp-line fp-line--cta"></div>
+                </div>
+              </div>
+            </div>
+            <div class="portfolio-meta">
+              <div class="portfolio-info">
+                <p class="portfolio-name">Project One</p>
+                <p class="portfolio-tags">Branding · Web Design</p>
+              </div>
+              <a href="#" class="portfolio-visit" aria-label="Visit project" tabindex="-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="portfolio-card">
+            <div class="preview-frame">
+              <div class="frame-chrome">
+                <div class="chrome-dots"><span></span><span></span><span></span></div>
+                <div class="chrome-bar"><span class="chrome-url-text">link coming soon</span></div>
+              </div>
+              <div class="frame-viewport fp-gradient-2">
+                <div class="fp-overlay"></div>
+                <div class="fp-hero-content">
+                  <div class="fp-line fp-line--eyebrow"></div>
+                  <div class="fp-line fp-line--h1"></div>
+                  <div class="fp-line fp-line--h1 fp-line--short"></div>
+                  <div class="fp-line fp-line--sub"></div>
+                  <div class="fp-line fp-line--cta"></div>
+                </div>
+              </div>
+            </div>
+            <div class="portfolio-meta">
+              <div class="portfolio-info">
+                <p class="portfolio-name">Project Two</p>
+                <p class="portfolio-tags">Content · Strategy</p>
+              </div>
+              <a href="#" class="portfolio-visit" aria-label="Visit project" tabindex="-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="portfolio-card">
+            <div class="preview-frame">
+              <div class="frame-chrome">
+                <div class="chrome-dots"><span></span><span></span><span></span></div>
+                <div class="chrome-bar"><span class="chrome-url-text">link coming soon</span></div>
+              </div>
+              <div class="frame-viewport fp-gradient-3">
+                <div class="fp-overlay"></div>
+                <div class="fp-hero-content">
+                  <div class="fp-line fp-line--eyebrow"></div>
+                  <div class="fp-line fp-line--h1"></div>
+                  <div class="fp-line fp-line--h1 fp-line--short"></div>
+                  <div class="fp-line fp-line--sub"></div>
+                  <div class="fp-line fp-line--cta"></div>
+                </div>
+              </div>
+            </div>
+            <div class="portfolio-meta">
+              <div class="portfolio-info">
+                <p class="portfolio-name">Project Three</p>
+                <p class="portfolio-tags">E-Commerce · UX</p>
+              </div>
+              <a href="#" class="portfolio-visit" aria-label="Visit project" tabindex="-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="portfolio-card">
+            <div class="preview-frame">
+              <div class="frame-chrome">
+                <div class="chrome-dots"><span></span><span></span><span></span></div>
+                <div class="chrome-bar"><span class="chrome-url-text">link coming soon</span></div>
+              </div>
+              <div class="frame-viewport fp-gradient-4">
+                <div class="fp-overlay"></div>
+                <div class="fp-hero-content">
+                  <div class="fp-line fp-line--eyebrow"></div>
+                  <div class="fp-line fp-line--h1"></div>
+                  <div class="fp-line fp-line--h1 fp-line--short"></div>
+                  <div class="fp-line fp-line--sub"></div>
+                  <div class="fp-line fp-line--cta"></div>
+                </div>
+              </div>
+            </div>
+            <div class="portfolio-meta">
+              <div class="portfolio-info">
+                <p class="portfolio-name">Project Four</p>
+                <p class="portfolio-tags">Web App · Branding</p>
+              </div>
+              <a href="#" class="portfolio-visit" aria-label="Visit project" tabindex="-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
     <!-- Stats Section -->
     <section class="stats-section" id="stats">
       <div class="stats-grid reveal">
@@ -66,7 +199,6 @@ function getTemplate() {
         </div>
         <div class="services-feature-grid">
 
-          <!-- 01: Branding -->
           <div class="feature-card">
             <div class="feature-card-top">
               <span class="feature-number">01</span>
@@ -86,7 +218,6 @@ function getTemplate() {
             <p data-i18n="bentoDesc1">Identify market needs with precision through our brand radar analysis.</p>
           </div>
 
-          <!-- 02: Web Design -->
           <div class="feature-card">
             <div class="feature-card-top">
               <span class="feature-number">02</span>
@@ -103,7 +234,6 @@ function getTemplate() {
             <p data-i18n="bentoDesc2">Immersive and performing code environments to elevate your app.</p>
           </div>
 
-          <!-- 03: Content Managing -->
           <div class="feature-card">
             <div class="feature-card-top">
               <span class="feature-number">03</span>
@@ -121,7 +251,6 @@ function getTemplate() {
             <p data-i18n="bentoDesc3">Interconnected nodes to distribute your message on every platform.</p>
           </div>
 
-          <!-- 04: Solutions -->
           <div class="feature-card">
             <div class="feature-card-top">
               <span class="feature-number">04</span>
