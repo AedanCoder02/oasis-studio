@@ -708,35 +708,19 @@
 
 .portfolio-track-wrap {
   width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  padding-bottom: var(--space-8);
-  /* Right-edge fade so users know there's more to scroll */
-  -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
-  mask-image: linear-gradient(to right, black 85%, transparent 100%);
-  cursor: grab;
-}
-
-.portfolio-track-wrap:active {
-  cursor: grabbing;
-}
-
-.portfolio-track-wrap::-webkit-scrollbar {
-  display: none;
 }
 
 .portfolio-track {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--space-24);
-  padding: 0 max(2rem, calc((100vw - 1160px) / 2));
-  width: max-content;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 2rem;
 }
 
 /* ---- Card ---- */
 .portfolio-card {
-  width: 380px;
-  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   gap: var(--space-16);
@@ -821,6 +805,16 @@
 .fp-gradient-4 {
   background: radial-gradient(ellipse at 25% 60%, rgba(177, 213, 247, 0.2) 0%, rgba(0,0,0,0) 65%),
               radial-gradient(ellipse at 75% 30%, rgba(242, 184, 128, 0.18) 0%, rgba(0,0,0,0) 55%),
+              #080808;
+}
+.fp-gradient-5 {
+  background: radial-gradient(ellipse at 40% 50%, rgba(48, 207, 153, 0.2) 0%, rgba(0,0,0,0) 60%),
+              radial-gradient(ellipse at 75% 20%, rgba(242, 184, 128, 0.14) 0%, rgba(0,0,0,0) 55%),
+              #080808;
+}
+.fp-gradient-6 {
+  background: radial-gradient(ellipse at 55% 40%, rgba(200, 100, 220, 0.2) 0%, rgba(0,0,0,0) 60%),
+              radial-gradient(ellipse at 25% 70%, rgba(177, 213, 247, 0.14) 0%, rgba(0,0,0,0) 55%),
               #080808;
 }
 
