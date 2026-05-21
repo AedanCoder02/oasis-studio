@@ -176,3 +176,23 @@ a:hover {
 .skip-to-content:focus {
   top: 0;
 }
+
+/* ---- Mouse spotlight (global cursor glow) ---- */
+.mouse-spotlight {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(177, 213, 247, 0.055) 0%,
+    rgba(242, 184, 128, 0.025) 40%,
+    transparent 65%
+  );
+  pointer-events: none;
+  z-index: 3;
+  will-change: transform;
+  mix-blend-mode: screen;
+}

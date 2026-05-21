@@ -4,17 +4,18 @@
 
 /* ---- Tablet (max-width: 1024px) ---- */
 @media (max-width: 1024px) {
-  .about-feature-grid {
-    grid-template-columns: 1fr;
-  }
+  /* Work cards: slightly narrower */
+  .work-card { width: min(380px, 82vw); }
 
-  .contact-layout {
-    grid-template-columns: 1fr;
-  }
+  /* Timeline: reduce number column */
+  .timeline-step { grid-template-columns: 3.5rem 32px 1fr; }
+  .timeline-rail-bg,
+  .timeline-fill-line { left: calc(3.5rem + 16px); }
+  .step-num-v { font-size: 1.4rem; }
 
-  .contact-view .form-row {
-    grid-template-columns: 1fr;
-  }
+  /* Testimonials: keep 2-col at tablet but equal widths */
+  .testimonials-grid { grid-template-columns: 1fr 1fr; }
+}
   .bento-grid {
     grid-template-columns: 1fr 1fr;
     height: auto;
@@ -49,24 +50,6 @@
 
   .form-row {
     grid-template-columns: 1fr;
-  }
-
-  /* Portfolio — 2-col grid at tablet */
-  .portfolio-track {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .portfolio-section {
-    padding: var(--space-48) 0;
-  }
-
-  /* Feature grid — stays 2-col at tablet, tighter padding */
-  .feature-card {
-    padding: var(--space-32);
-  }
-
-  .home-services-section {
-    padding: var(--space-48) 0;
   }
 }
 
@@ -110,10 +93,6 @@
     text-align: center;
   }
 
-  .clients-section {
-    padding: var(--space-32) 2rem;
-  }
-
   .clients-track {
     gap: 1.5rem;
   }
@@ -136,45 +115,6 @@
     flex-direction: column;
     gap: var(--space-7);
     text-align: center;
-  }
-
-  /* Portfolio — 1-col grid on mobile */
-  .portfolio-track {
-    grid-template-columns: 1fr;
-  }
-
-  .portfolio-section {
-    padding: var(--space-40) 0;
-  }
-
-  .frame-viewport {
-    height: 185px;
-  }
-
-  /* Feature grid — collapse to single column */
-  .services-feature-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .home-services-section {
-    padding: var(--space-40) 0;
-  }
-
-  .feature-card {
-    padding: var(--space-24);
-  }
-
-  /* View pages */
-  .view-page {
-    padding: 100px 1.5rem var(--space-48);
-  }
-
-  .view-page-header {
-    margin-bottom: var(--space-40);
-  }
-
-  .contact-view .contact-form {
-    padding: var(--space-24);
   }
 }
 
@@ -200,53 +140,33 @@
     padding: 0 1.5rem;
   }
 
-  /* Portfolio */
-  .portfolio-section {
-    padding: var(--space-32) 0;
-  }
+  /* Work showcase: full-width cards, left-pad matches section */
+  .work-track { padding: 8px 4% 32px; }
+  .work-card  { width: min(340px, 86vw); }
+  .work-card-body { height: 240px; }
 
-  .frame-viewport {
-    height: 160px;
-  }
+  /* Process timeline: hide numbers, collapse to 2-col */
+  .timeline-step { grid-template-columns: 24px 1fr; }
+  .step-num-v    { display: none; }
+  .timeline-rail-bg,
+  .timeline-fill-line { left: 12px; transform: none; }
 
-  .fp-hero-content {
-    padding: 0 var(--space-16);
-  }
-
-  .fp-line--h1 {
-    height: 14px;
-  }
-
-  .fp-line--cta {
-    height: 22px;
-  }
-
-  /* Feature grid */
-  .feature-card {
-    padding: var(--space-20) var(--space-24);
-  }
-
-  .feature-icon {
-    width: 22px;
-    height: 22px;
-  }
-
-  /* Stats tighter on tiny screens */
-  .stats-section {
-    padding: var(--space-48) 1.5rem;
-  }
-
-  /* Process steps */
-  .process-step {
-    padding: var(--space-24);
-  }
-
-  /* View pages */
-  .view-page {
-    padding: 90px 1.25rem var(--space-40);
-  }
-
-  .contact-view .form-row {
+  /* Testimonials: single column, featured = normal card */
+  .testimonials-grid {
     grid-template-columns: 1fr;
+    grid-template-rows: auto;
   }
+  .testimonial-card--featured { grid-row: auto; }
+  .testimonial-card--featured::before { display: none; }
+
+  /* Bento numbered grid: single column */
+  .bento-grid-n { grid-template-columns: 1fr; width: 95vw; }
+  .bento-card-n:nth-child(2n) { border-right: 1px solid var(--color-border-default); }
+  .bento-card-n:nth-child(3)  { border-bottom: 1px solid var(--color-border-default); }
+
+  /* Work grid: 1-column on mobile */
+  .work-grid { grid-template-columns: 1fr; }
+
+  /* Testimonials: single column */
+  .testimonials-grid { grid-template-columns: 1fr; }
 }
