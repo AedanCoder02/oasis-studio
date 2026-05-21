@@ -84,22 +84,30 @@ function lerpRgb(a, b, t) {
 }
 
 function setupScrollColorJourney() {
-  // Color stops keyed to section selectors — order matches DOM top→bottom
+  // Stops: alpha=0 at hero so sandy mesh shows; alpha=1 from marquee onward.
+  // The overlay sits at z-index -8 — between blobs (-9) and grain (-7) —
+  // so it covers the sandy ambient background while the grain texture shows through.
   const STOPS = [
-    { sel: '.hero-section',          hex: '#000000' },
-    { sel: '.marquee-section',       hex: '#130622' },
-    { sel: '.home-services-section', hex: '#130622' },
-    { sel: '.work-section',          hex: '#071510' },
-    { sel: '.process-section',       hex: '#170508' },
-    { sel: '.testimonials-section',  hex: '#060c1c' },
-    { sel: '.cta-section',           hex: '#060c1c' },
+    { sel: '.hero-section',          hex: '#000000', a: 0 },
+    { sel: '.marquee-section',       hex: '#130622', a: 1 },
+    { sel: '.home-services-section', hex: '#130622', a: 1 },
+    { sel: '.work-section',          hex: '#071510', a: 1 },
+    { sel: '.process-section',       hex: '#170508', a: 1 },
+    { sel: '.testimonials-section',  hex: '#060c1c', a: 1 },
+    { sel: '.cta-section',           hex: '#060c1c', a: 1 },
   ];
 
+  // Inject fixed backdrop between blobs and grain
+  const bg = document.createElement('div');
+  bg.id = 'page-bg';
+  bg.style.cssText = 'position:fixed;inset:0;z-index:-8;pointer-events:none;will-change:background-color;';
+  document.body.appendChild(bg);
+
   const resolved = STOPS
-    .map(s => ({ el: document.querySelector(s.sel), rgb: hexToRgb(s.hex) }))
+    .map(s => ({ el: document.querySelector(s.sel), rgb: hexToRgb(s.hex), a: s.a }))
     .filter(s => s.el);
 
-  if (resolved.length < 2) return () => {};
+  if (resolved.length < 2) return () => { bg.remove(); };
 
   let raf = null;
   let dirty = false;
@@ -109,37 +117,38 @@ function setupScrollColorJourney() {
   const tick = () => {
     if (dirty) {
       dirty = false;
-      // Use center-of-viewport as sampling point
       const sample = window.scrollY + window.innerHeight * 0.5;
-      let color = resolved[0].rgb;
+      let rgb = resolved[0].rgb;
+      let alpha = resolved[0].a;
 
       for (let i = 0; i < resolved.length - 1; i++) {
         const a = resolved[i];
         const b = resolved[i + 1];
         const aTop = a.el.offsetTop;
         const bTop = b.el.offsetTop;
-        if (sample <= aTop) { color = a.rgb; break; }
-        if (sample >= bTop) { color = b.rgb; continue; }
-        const t = (sample - aTop) / (bTop - aTop);
-        color = lerpRgb(a.rgb, b.rgb, Math.max(0, Math.min(1, t)));
+        if (sample <= aTop) { rgb = a.rgb; alpha = a.a; break; }
+        if (sample >= bTop) { rgb = b.rgb; alpha = b.a; continue; }
+        const t = Math.max(0, Math.min(1, (sample - aTop) / (bTop - aTop)));
+        rgb = lerpRgb(a.rgb, b.rgb, t);
+        alpha = a.a + (b.a - a.a) * t;
         break;
       }
 
-      const rgb = `rgb(${color[0]},${color[1]},${color[2]})`;
-      document.body.style.backgroundColor = rgb;
-      document.documentElement.style.setProperty('--marquee-edge', rgb);
+      const color = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${alpha.toFixed(3)})`;
+      bg.style.backgroundColor = color;
+      document.documentElement.style.setProperty('--marquee-edge', `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`);
     }
     raf = requestAnimationFrame(tick);
   };
 
   window.addEventListener('scroll', onScroll, { passive: true });
-  dirty = true; // initialize immediately
+  dirty = true;
   raf = requestAnimationFrame(tick);
 
   return () => {
     window.removeEventListener('scroll', onScroll);
     cancelAnimationFrame(raf);
-    document.body.style.backgroundColor = '';
+    bg.remove();
     document.documentElement.style.removeProperty('--marquee-edge');
   };
 }

@@ -611,18 +611,20 @@
    FOOTER
    ========================================================== */
 .site-footer {
-  border-top: 1px solid var(--color-border-default);
+  border-top: 1px solid rgba(255,255,255,0.08);
   padding: var(--space-48) 2rem var(--space-32);
   position: relative;
   z-index: 10;
+  background: #060c1c;
 }
 
 .footer-inner {
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: var(--space-48);
+  grid-template-columns: 1.8fr 1fr 1fr 1fr;
+  gap: clamp(24px, 4vw, 64px);
+  align-items: start;
 }
 
 .footer-brand {
