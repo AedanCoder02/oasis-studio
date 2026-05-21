@@ -84,30 +84,27 @@ function lerpRgb(a, b, t) {
 }
 
 function setupScrollColorJourney() {
-  // Stops: alpha=0 at hero so sandy mesh shows; alpha=1 from marquee onward.
-  // The overlay sits at z-index -8 — between blobs (-9) and grain (-7) —
-  // so it covers the sandy ambient background while the grain texture shows through.
+  // Drive .ambient-background color directly — no injected divs, no new compositing
+  // layers, so mix-blend-mode on the grain overlay is unaffected.
+  // Hero stop matches the CSS default #BCA478 so there is zero visual change at load.
   const STOPS = [
-    { sel: '.hero-section',          hex: '#000000', a: 0 },
-    { sel: '.marquee-section',       hex: '#130622', a: 1 },
-    { sel: '.home-services-section', hex: '#130622', a: 1 },
-    { sel: '.work-section',          hex: '#071510', a: 1 },
-    { sel: '.process-section',       hex: '#170508', a: 1 },
-    { sel: '.testimonials-section',  hex: '#060c1c', a: 1 },
-    { sel: '.cta-section',           hex: '#060c1c', a: 1 },
+    { sel: '.hero-section',          hex: '#BCA478' },
+    { sel: '.marquee-section',       hex: '#130622' },
+    { sel: '.home-services-section', hex: '#130622' },
+    { sel: '.work-section',          hex: '#071510' },
+    { sel: '.process-section',       hex: '#170508' },
+    { sel: '.testimonials-section',  hex: '#060c1c' },
+    { sel: '.cta-section',           hex: '#060c1c' },
   ];
 
-  // Inject fixed backdrop between blobs and grain
-  const bg = document.createElement('div');
-  bg.id = 'page-bg';
-  bg.style.cssText = 'position:fixed;inset:0;z-index:-8;pointer-events:none;will-change:background-color;';
-  document.body.appendChild(bg);
+  const ambientBg = document.querySelector('.ambient-background');
+  if (!ambientBg) return () => {};
 
   const resolved = STOPS
-    .map(s => ({ el: document.querySelector(s.sel), rgb: hexToRgb(s.hex), a: s.a }))
+    .map(s => ({ el: document.querySelector(s.sel), rgb: hexToRgb(s.hex) }))
     .filter(s => s.el);
 
-  if (resolved.length < 2) return () => { bg.remove(); };
+  if (resolved.length < 2) return () => {};
 
   let raf = null;
   let dirty = false;
@@ -118,25 +115,23 @@ function setupScrollColorJourney() {
     if (dirty) {
       dirty = false;
       const sample = window.scrollY + window.innerHeight * 0.5;
-      let rgb = resolved[0].rgb;
-      let alpha = resolved[0].a;
+      let color = resolved[0].rgb;
 
       for (let i = 0; i < resolved.length - 1; i++) {
         const a = resolved[i];
         const b = resolved[i + 1];
         const aTop = a.el.offsetTop;
         const bTop = b.el.offsetTop;
-        if (sample <= aTop) { rgb = a.rgb; alpha = a.a; break; }
-        if (sample >= bTop) { rgb = b.rgb; alpha = b.a; continue; }
+        if (sample <= aTop) { color = a.rgb; break; }
+        if (sample >= bTop) { color = b.rgb; continue; }
         const t = Math.max(0, Math.min(1, (sample - aTop) / (bTop - aTop)));
-        rgb = lerpRgb(a.rgb, b.rgb, t);
-        alpha = a.a + (b.a - a.a) * t;
+        color = lerpRgb(a.rgb, b.rgb, t);
         break;
       }
 
-      const color = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${alpha.toFixed(3)})`;
-      bg.style.backgroundColor = color;
-      document.documentElement.style.setProperty('--marquee-edge', `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`);
+      const rgb = `rgb(${color[0]},${color[1]},${color[2]})`;
+      ambientBg.style.background = rgb;
+      document.documentElement.style.setProperty('--marquee-edge', rgb);
     }
     raf = requestAnimationFrame(tick);
   };
@@ -148,7 +143,7 @@ function setupScrollColorJourney() {
   return () => {
     window.removeEventListener('scroll', onScroll);
     cancelAnimationFrame(raf);
-    bg.remove();
+    ambientBg.style.background = '';
     document.documentElement.style.removeProperty('--marquee-edge');
   };
 }
