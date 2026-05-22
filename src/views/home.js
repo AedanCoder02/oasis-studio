@@ -38,7 +38,7 @@ const ICONS = {
 function workCard(url, name, cats, accentHex) {
   const rgba = hexToRgba(accentHex, 0.15);
   const displayUrl = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
-  const screenshot = `https://image.thum.io/get/width/800/crop/520/${url}`;
+  const screenshot = `https://image.thum.io/get/viewportWidth/1280/width/1280/crop/720/${url}`;
   return `
     <article class="work-grid-card reveal">
       <a class="wgc-link" href="${url}" target="_blank" rel="noopener noreferrer" aria-label="Open ${name}">
@@ -306,7 +306,7 @@ function getTemplate() {
           ${workCard('https://by0gch-qd.myshopify.com/', 'Oasis Yacht Club', 'Luxury · Marine', '#ffd2fc')}
           ${workCard('https://universe-media-two.vercel.app/', 'Universe Media', 'News · Digital Media', '#B1D5F7')}
           ${workCard('https://ishinacademy.framer.website/', 'Ishin Academy', 'Education · Framer', '#f2b880')}
-          ${workCard('https://gliberandglow.lovable.app/', 'Gliber & Glow', 'Beauty · Lifestyle', '#ffd2fc')}
+          ${workCard('https://glimmerandglow.lovable.app/', 'Glimmer & Glow', 'Beauty · Lifestyle', '#ffd2fc')}
         </div>
       </div>
     </section>
