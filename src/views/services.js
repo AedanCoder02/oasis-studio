@@ -1,56 +1,94 @@
-// --- src/views/services.js ---
-import servicesData from '../data/services.json';
+// src/views/services.js
 
 let tweens = [];
 
-const ICONS = {
-  'branding': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>`,
-  'web-design': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="8" x2="22" y2="8"/><polyline points="7 13 10 16 7 19"/><line x1="13" y1="19" x2="17" y2="19"/></svg>`,
-  'content-managing': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>`,
-  'solutions': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>`,
-};
-
-const NUMS = ['01', '02', '03', '04'];
-
-function renderCard(service, i) {
-  return `
-    <div class="feature-card" tabindex="0" role="article" aria-labelledby="svc-${service.id}">
-      <div class="feature-card-top">
-        <span class="feature-number">${NUMS[i]}</span>
-        <div class="feature-icon">${ICONS[service.id] || ''}</div>
-      </div>
-      <h3 id="svc-${service.id}" data-i18n="${service.titleKey}">${service.titleKey}</h3>
-      <p data-i18n="${service.descKey}">${service.descKey}</p>
-      <span class="feature-badge">${service.tag}</span>
-    </div>
-  `;
-}
+const SERVICES = [
+  {
+    num: '01',
+    name: 'Branding',
+    tag: 'Identity Systems',
+    desc: 'We craft visual identities that are impossible to ignore. From strategy and naming to logo systems and brand guidelines — every element engineered to resonate with your audience and outlast trends.',
+    deliverables: ['Brand Strategy', 'Logo & Visual Identity', 'Typography & Color Systems', 'Brand Guidelines', 'Collateral Design'],
+  },
+  {
+    num: '02',
+    name: 'Web Design & Dev',
+    tag: 'Digital Experiences',
+    desc: 'We design and build websites that operate as your highest-performing sales asset. Immersive aesthetics, flawless performance, and conversion architecture — deployed on modern infrastructure that scales.',
+    deliverables: ['UI/UX Design', 'Custom Development', 'Shopify & E-Commerce', 'CMS Integration', 'Performance Optimization'],
+  },
+  {
+    num: '03',
+    name: 'Content Strategy',
+    tag: 'Multi-Platform',
+    desc: 'Content that earns attention and keeps it. We build editorial systems, produce high-value assets, and distribute your message across every relevant channel with the precision your brand deserves.',
+    deliverables: ['Content Roadmapping', 'Copywriting & Editing', 'SEO Content', 'Social Media Systems', 'Video & Visual Production'],
+  },
+  {
+    num: '04',
+    name: 'Growth & Analytics',
+    tag: 'Revenue Optimization',
+    desc: 'We instrument your digital presence with the data infrastructure needed to make every decision confidently. Continuous optimization loops that compound improvements month over month.',
+    deliverables: ['Analytics Setup & Audit', 'SEO Strategy', 'Conversion Rate Optimization', 'A/B Testing', 'Performance Reporting'],
+  },
+];
 
 export function mount(container) {
   window.scrollTo(0, 0);
 
-  const cards = servicesData.services.map(renderCard).join('');
-
-  container.innerHTML = `
-    <div class="view-page" role="main" aria-label="Services">
-      <div class="view-page-inner">
-        <div class="section-header view-page-header">
-          <p class="section-eyebrow" data-i18n="servicesEyebrow">What We Do</p>
-          <h1 data-i18n="servicesPageTitle">Our Services</h1>
-          <p class="section-sub" data-i18n="servicesPageSub">Comprehensive solutions designed to elevate your digital presence.</p>
+  const items = SERVICES.map(s => `
+    <div class="svc-item svc-item--page">
+      <span class="svc-num">${s.num}</span>
+      <div class="svc-body">
+        <div class="svc-head-row">
+          <h2 class="svc-name">${s.name}</h2>
+          <span class="svc-tag">${s.tag}</span>
         </div>
-        <div class="services-feature-grid">
-          ${cards}
-        </div>
+        <p class="svc-desc">${s.desc}</p>
+        <ul class="svc-deliverables">
+          ${s.deliverables.map(d => `<li>${d}</li>`).join('')}
+        </ul>
       </div>
     </div>
+  `).join('');
+
+  container.innerHTML = `
+    <div class="view-page services-page" role="main" aria-label="Services">
+
+      <!-- ── HERO TEXT ── -->
+      <div class="view-hero-text">
+        <p class="section-eyebrow" data-i18n="servicesEyebrow">What We Do</p>
+        <h1 data-i18n="servicesPageTitle">Engineered<br>for Impact</h1>
+        <p class="section-sub" data-i18n="servicesPageSub">Comprehensive solutions designed to elevate your digital presence and drive measurable business growth.</p>
+      </div>
+
+      <!-- ── SERVICES LIST ── -->
+      <div class="services-list services-list--page">
+        ${items}
+      </div>
+
+      <!-- ── CTA ── -->
+      <div class="svc-page-cta">
+        <h2 data-i18n="svcCtaTitle">Ready to start a project?</h2>
+        <p data-i18n="svcCtaSub">Tell us about your vision and we'll tell you exactly how we'll bring it to life.</p>
+        <a href="#contact" data-route="#contact" class="btn-main" data-i18n="ctaBtn">Transform My Business</a>
+      </div>
+
+    </div>
   `;
+
+  container.querySelectorAll('a[data-route]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      window.location.hash = link.getAttribute('data-route');
+    });
+  });
 
   requestAnimationFrame(() => {
     const { gsap } = window;
     if (!gsap) return;
-    const els = container.querySelectorAll('.feature-card');
-    tweens.push(gsap.from(els, { y: 30, opacity: 0, duration: 0.5, stagger: 0.1, ease: 'power3.out' }));
+    tweens.push(gsap.from('.view-hero-text h1', { y: 40, opacity: 0, duration: 0.8, ease: 'power3.out' }));
+    tweens.push(gsap.from('.svc-item--page', { y: 30, opacity: 0, duration: 0.6, stagger: 0.12, delay: 0.2, ease: 'power3.out' }));
   });
 }
 

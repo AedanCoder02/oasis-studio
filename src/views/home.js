@@ -6,6 +6,7 @@ let dragCleanup = null;
 let timelineCleanup = null;
 let tiltCleanup = null;
 let colorJourneyCleanup = null;
+let heroMorphCleanup = null;
 
 const TECH_TAGS = [
   'Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Node.js',
@@ -32,35 +33,33 @@ const ICONS = {
 };
 
 // ---------------------------------------------------------------------------
-// Work project helper
+// Work project helper — uses thum.io for live screenshots, no API key needed
 // ---------------------------------------------------------------------------
 function workCard(url, name, cats, accentHex) {
-  const rgba = hexToRgba(accentHex, 0.18);
+  const rgba = hexToRgba(accentHex, 0.15);
+  const displayUrl = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+  const screenshot = `https://image.thum.io/get/width/800/crop/520/${url}`;
   return `
     <article class="work-grid-card reveal">
-      <div class="wgc-frame">
-        <div class="wgc-chrome" aria-hidden="true">
-          <span class="bc-dot bc-red"></span>
-          <span class="bc-dot bc-yellow"></span>
-          <span class="bc-dot bc-green"></span>
-          <span class="wgc-url">${url}</span>
+      <a class="wgc-link" href="${url}" target="_blank" rel="noopener noreferrer" aria-label="Open ${name}">
+        <div class="wgc-frame">
+          <div class="wgc-chrome" aria-hidden="true">
+            <span class="bc-dot bc-red"></span><span class="bc-dot bc-yellow"></span><span class="bc-dot bc-green"></span>
+            <span class="wgc-url">${displayUrl}</span>
+          </div>
+          <div class="wgc-screen">
+            <img class="wgc-screenshot" src="${screenshot}" alt="${name} website preview" loading="lazy" />
+            <div class="wgc-screen-tint" style="background:linear-gradient(to top,${rgba} 0%,transparent 55%)"></div>
+          </div>
         </div>
-        <div class="wgc-screen">
-          <div class="wgc-glow" style="background:radial-gradient(ellipse at 50% 110%,${rgba},transparent 65%)"></div>
-          <div class="wgc-line wgc-line--accent" style="background:${accentHex};opacity:.5"></div>
-          <div class="wgc-line" style="width:70%"></div>
-          <div class="wgc-line" style="width:50%"></div>
-          <div class="wgc-line" style="width:82%"></div>
-          <div class="wgc-btn"></div>
+        <div class="wgc-meta">
+          <div>
+            <h3 class="wgc-name">${name}</h3>
+            <p class="wgc-cats">${cats}</p>
+          </div>
+          <span class="wgc-arrow" aria-hidden="true">↗</span>
         </div>
-      </div>
-      <div class="wgc-meta">
-        <div>
-          <h3 class="wgc-name">${name}</h3>
-          <p class="wgc-cats">${cats}</p>
-        </div>
-        <span class="wgc-arrow" aria-hidden="true">↗</span>
-      </div>
+      </a>
     </article>`;
 }
 
@@ -81,6 +80,52 @@ function lerpRgb(a, b, t) {
     Math.round(a[1] + (b[1]-a[1])*t),
     Math.round(a[2] + (b[2]-a[2])*t),
   ];
+}
+
+function setupHeroLogoMorph() {
+  const heroLogo = document.querySelector('.hero-logo-large');
+  const navLogoWrap = document.querySelector('nav a.logo');
+  const heroSection = document.querySelector('.hero-section');
+  if (!heroLogo || !navLogoWrap || !heroSection) return () => {};
+
+  navLogoWrap.style.opacity = '0';
+  navLogoWrap.style.transition = 'opacity 0.3s ease';
+  navLogoWrap.style.pointerEvents = 'none';
+
+  let raf = null;
+  let dirty = true;
+
+  const onScroll = () => { dirty = true; };
+
+  const tick = () => {
+    if (dirty) {
+      dirty = false;
+      const heroH = heroSection.offsetHeight;
+      const t = Math.max(0, Math.min(1, window.scrollY / (heroH * 0.55)));
+
+      // Hero logo: fade + subtle float up
+      heroLogo.style.opacity = String(Math.max(0, 1 - t * 2));
+      heroLogo.style.transform = `translateY(${-t * 30}px) scale(${1 - t * 0.12})`;
+
+      // Nav logo: fades in once hero logo is mostly gone
+      const navT = Math.max(0, (t - 0.45) / 0.55);
+      navLogoWrap.style.opacity = String(navT);
+      navLogoWrap.style.pointerEvents = navT > 0.5 ? 'auto' : 'none';
+    }
+    raf = requestAnimationFrame(tick);
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  raf = requestAnimationFrame(tick);
+
+  return () => {
+    window.removeEventListener('scroll', onScroll);
+    cancelAnimationFrame(raf);
+    navLogoWrap.style.opacity = '';
+    navLogoWrap.style.transition = '';
+    navLogoWrap.style.pointerEvents = '';
+    if (heroLogo) { heroLogo.style.opacity = ''; heroLogo.style.transform = ''; }
+  };
 }
 
 function setupScrollColorJourney() {
@@ -159,8 +204,9 @@ function getTemplate() {
     <!-- ===================== HERO ===================== -->
     <section class="hero-section" id="hero">
       <div class="hero-content reveal">
-        <p class="hero-eyebrow" data-i18n="heroEyebrow">Creative Studio</p>
-        <h1 class="title-main" data-i18n="heroTitle">Navigate<br>Your Desert</h1>
+        <div class="hero-logo-wrap">
+          <img src="/logo-white.png" alt="Oasis Studio" class="hero-logo-large" />
+        </div>
         <p class="subtitle" data-i18n="heroSub">Find the definitive solutions for your business.</p>
         <div class="hero-actions">
           <a href="#contact" data-route="#contact" class="btn-main" data-i18n="ctaBtn">Transform My Business</a>
@@ -202,7 +248,7 @@ function getTemplate() {
       </div>
     </section>
 
-    <!-- ===================== SERVICES — NUMBERED GRID ===================== -->
+    <!-- ===================== SERVICES — EDITORIAL LIST ===================== -->
     <section class="home-services-section" id="home-services">
       <div class="section-inner">
         <div class="section-header reveal">
@@ -210,50 +256,39 @@ function getTemplate() {
           <h2 data-i18n="servicesHeading">Engineered for Impact</h2>
         </div>
       </div>
-      <div class="bento-grid-n reveal">
-
-        <div class="bento-card-n">
-          <div class="bcn-top">
-            <span class="bcn-num">0 1</span>
-            ${ICONS.radar}
+      <div class="services-list">
+        <div class="svc-item reveal">
+          <span class="svc-num">01</span>
+          <div class="svc-body">
+            <h3 class="svc-name">Branding</h3>
+            <p class="svc-desc">Visual identity systems that anchor your brand in the consciousness of your market — from logo to language.</p>
           </div>
-          <h3 data-i18n="bentoTitle1">Branding</h3>
-          <p data-i18n="bentoDesc1">Identify market needs with precision through our advanced brand radar analysis.</p>
+          <span class="svc-arrow" aria-hidden="true">↗</span>
         </div>
-
-        <div class="bento-card-n">
-          <div class="bcn-top">
-            <span class="bcn-num">0 2</span>
-            ${ICONS.code}
+        <div class="svc-item reveal">
+          <span class="svc-num">02</span>
+          <div class="svc-body">
+            <h3 class="svc-name">Web Design &amp; Dev</h3>
+            <p class="svc-desc">Immersive, high-performance digital environments engineered to captivate visitors and convert them into clients.</p>
           </div>
-          <h3 data-i18n="bentoTitle2">Web Design</h3>
-          <p data-i18n="bentoDesc2">Immersive and performing code environments to elevate your digital product.</p>
+          <span class="svc-arrow" aria-hidden="true">↗</span>
         </div>
-
-        <div class="bento-card-n">
-          <div class="bcn-top">
-            <span class="bcn-num">0 3</span>
-            ${ICONS.nodes}
+        <div class="svc-item reveal">
+          <span class="svc-num">03</span>
+          <div class="svc-body">
+            <h3 class="svc-name">Content Strategy</h3>
+            <p class="svc-desc">Multi-platform content ecosystems that distribute your message with precision and drive measurable engagement.</p>
           </div>
-          <h3 data-i18n="bentoTitle3">Content Managing</h3>
-          <p data-i18n="bentoDesc3">Interconnected nodes to effortlessly distribute your message on every platform.</p>
+          <span class="svc-arrow" aria-hidden="true">↗</span>
         </div>
-
-        <div class="bento-card-n">
-          <div class="bcn-top">
-            <span class="bcn-num">0 4</span>
-            ${ICONS.shield}
+        <div class="svc-item reveal">
+          <span class="svc-num">04</span>
+          <div class="svc-body">
+            <h3 class="svc-name">Growth &amp; Analytics</h3>
+            <p class="svc-desc">Data-driven optimization — SEO, CRO, and performance insights — that compound revenue at scale.</p>
           </div>
-          <h3 data-i18n="bentoTitle4">Our Solutions</h3>
-          <p data-i18n="bentoDesc4">Guaranteed enterprise workflows that generate true scalable impact.</p>
-          <ul class="bcn-list">
-            <li data-i18n="check1">Scalable Architecture</li>
-            <li data-i18n="check2">SEO Optimization</li>
-            <li data-i18n="check3">Conversion Rate</li>
-            <li>Analytics & Insights</li>
-          </ul>
+          <span class="svc-arrow" aria-hidden="true">↗</span>
         </div>
-
       </div>
     </section>
 
@@ -266,12 +301,12 @@ function getTemplate() {
           <p class="section-sub">Real projects. Real results. Built with the technology that scales.</p>
         </div>
         <div class="work-grid">
-          ${workCard('link coming soon', 'Nextera Digital Store', 'E-Commerce · Shopify', '#B1D5F7')}
-          ${workCard('link coming soon', 'Velora Analytics', 'SaaS · Dashboard', '#f2b880')}
-          ${workCard('link coming soon', 'Meridian Brand System', 'Branding · Identity', '#ffd2fc')}
-          ${workCard('link coming soon', 'Centris Media Hub', 'Content · SEO', '#38f9d7')}
-          ${workCard('link coming soon', 'Ascendio Platform', 'Web Design · UX', '#B1D5F7')}
-          ${workCard('link coming soon', 'Universe Media Co.', 'Digital · Strategy', '#f2b880')}
+          ${workCard('https://kimonatelier.com/', 'House of Kimona', 'E-Commerce · Shopify', '#f2b880')}
+          ${workCard('https://thelegacyholding.com/', 'The Legacy Holding', 'Corporate · Real Estate', '#B1D5F7')}
+          ${workCard('https://by0gch-qd.myshopify.com/', 'Oasis Yacht Club', 'Luxury · Marine', '#ffd2fc')}
+          ${workCard('https://universemedia.com/', 'Universe Media', 'News · Digital Media', '#B1D5F7')}
+          ${workCard('https://ishinacademy.framer.website/', 'Ishin Academy', 'Education · Framer', '#f2b880')}
+          ${workCard('https://gliberandglow.lovable.app/', 'Gliber & Glow', 'Beauty · Lifestyle', '#ffd2fc')}
         </div>
       </div>
     </section>
@@ -407,34 +442,13 @@ function setupScrollReveal(container) {
 }
 
 // ---------------------------------------------------------------------------
-// 3D card tilt — bento cards + work grid frames
+// 3D card tilt — work grid frames
 // ---------------------------------------------------------------------------
 function setupCardTilt(container) {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (window.matchMedia('(pointer: coarse)').matches) return;
 
   const cleanupFns = [];
-
-  // Bento numbered cards
-  container.querySelectorAll('.bento-card-n').forEach(card => {
-    const onMove = (e) => {
-      const r = card.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - 0.5;
-      const y = (e.clientY - r.top) / r.height - 0.5;
-      card.style.transition = 'transform 0.05s linear, box-shadow 0.05s linear';
-      card.style.transform = `perspective(1100px) rotateX(${y * -6}deg) rotateY(${x * 6}deg) translateZ(6px)`;
-    };
-    const onLeave = () => {
-      card.style.transition = 'transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.5s ease';
-      card.style.transform = '';
-    };
-    card.addEventListener('mousemove', onMove);
-    card.addEventListener('mouseleave', onLeave);
-    cleanupFns.push(() => {
-      card.removeEventListener('mousemove', onMove);
-      card.removeEventListener('mouseleave', onLeave);
-    });
-  });
 
   // Work grid frames
   container.querySelectorAll('.work-grid-card').forEach(card => {
@@ -503,6 +517,7 @@ export function mount(container) {
     setupCardTilt(container);
     setupTimelineFill(container);
     colorJourneyCleanup = setupScrollColorJourney();
+    heroMorphCleanup = setupHeroLogoMorph();
   });
 }
 
@@ -513,4 +528,5 @@ export function unmount() {
   if (timelineCleanup)     { timelineCleanup();     timelineCleanup = null; }
   if (tiltCleanup)         { tiltCleanup();         tiltCleanup = null; }
   if (colorJourneyCleanup) { colorJourneyCleanup(); colorJourneyCleanup = null; }
+  if (heroMorphCleanup)   { heroMorphCleanup();    heroMorphCleanup = null; }
 }

@@ -169,4 +169,18 @@
 
   /* Testimonials: single column */
   .testimonials-grid { grid-template-columns: 1fr; }
+
+  /* Services list: tighten on mobile */
+  .svc-item { grid-template-columns: 3rem 1fr 1.5rem; gap: 0 0.75rem; }
+  .svc-item--page { grid-template-columns: 3rem 1fr; }
+  .svc-head-row { flex-direction: column; gap: 8px; }
+
+  /* About stats: 2-col grid on mobile */
+  .about-stats-strip { flex-wrap: wrap; }
+  .ast-item { flex: 0 0 calc(50% - 1px); }
+  .ast-divider:nth-child(2) { display: none; }
+  .about-pillar { grid-template-columns: 3rem 1fr; }
+
+  /* About CTA strip: stack */
+  .about-cta-strip { flex-direction: column; text-align: center; }
 }
