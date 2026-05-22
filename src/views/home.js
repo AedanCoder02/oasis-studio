@@ -301,10 +301,10 @@ function getTemplate() {
           <p class="section-sub">Real projects. Real results. Built with the technology that scales.</p>
         </div>
         <div class="work-grid">
-          ${workCard('https://kimonatelier.com/', 'House of Kimona', 'E-Commerce · Shopify', '#f2b880')}
-          ${workCard('https://thelegacyholding.com/', 'The Legacy Holding', 'Corporate · Real Estate', '#B1D5F7')}
+          ${workCard('https://kimonatelier.com/', 'Kimona Telier', 'E-Commerce · Shopify', '#f2b880')}
+          ${workCard('https://www.thelegacyholding.com/', 'The Legacy Holding', 'Corporate · Real Estate', '#B1D5F7')}
           ${workCard('https://by0gch-qd.myshopify.com/', 'Oasis Yacht Club', 'Luxury · Marine', '#ffd2fc')}
-          ${workCard('https://universemedia.com/', 'Universe Media', 'News · Digital Media', '#B1D5F7')}
+          ${workCard('https://universe-media-two.vercel.app/', 'Universe Media', 'News · Digital Media', '#B1D5F7')}
           ${workCard('https://ishinacademy.framer.website/', 'Ishin Academy', 'Education · Framer', '#f2b880')}
           ${workCard('https://gliberandglow.lovable.app/', 'Gliber & Glow', 'Beauty · Lifestyle', '#ffd2fc')}
         </div>

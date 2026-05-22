@@ -44,7 +44,8 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .contact-grid {
+  .contact-grid,
+  .contact-layout {
     grid-template-columns: 1fr;
   }
 
