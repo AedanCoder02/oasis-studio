@@ -1,18 +1,15 @@
 /* ==========================================================
-   MESH GRADIENT SYSTEM — Warm golden beige like Skylrk reference
-   Saturated, grainy, with vignette effect
+   MESH GRADIENT — Dark ink base, subtle warm blobs
    ========================================================== */
 
-/* Warm golden-brown base — like the Skylrk shoe background */
 .ambient-background {
   position: fixed;
   top: 0; left: 0;
   width: 100vw; height: 100vh;
   z-index: -10;
-  background: #BCA478;
+  background: #1A130E;
 }
 
-/* Blob container */
 #blob-container {
   position: fixed;
   top: 0; left: 0;
@@ -20,36 +17,35 @@
   pointer-events: none;
   z-index: -9;
   overflow: hidden;
+  opacity: 0.25;
 }
 
-/* Grain texture — VERY crisp and prominent */
+/* Grain texture — paper feel */
 .grain-overlay {
   position: fixed;
   top: 0; left: 0;
   width: 100vw; height: 100vh;
   z-index: -7;
   pointer-events: none;
-  opacity: 1;
+  opacity: 0.55;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='6' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.28'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 256px 256px;
   mix-blend-mode: overlay;
 }
 
-/* Vignette — darkens edges, brighter center */
 .grain-overlay::after {
   content: '';
   position: fixed;
   top: 0; left: 0;
   width: 100vw; height: 100vh;
-  background: radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(0, 0, 0, 0.35) 100%);
+  background: radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(0,0,0,0.45) 100%);
   pointer-events: none;
 }
 
 /* ==========================================================
-   GRADIENT BLOBS — Golden, warm, saturated
+   BLOBS — Warm amber, very subtle on dark
    ========================================================== */
-
 .mesh-blob {
   position: absolute;
   border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
@@ -57,122 +53,68 @@
   transform-origin: 50% 50%;
 }
 
-/* Blob 1 — Bright golden center wash */
 .blob-1 {
-  top: -10%;
-  left: 10%;
-  width: 80vw;
-  height: 80vh;
-  background: radial-gradient(ellipse at center, rgba(215, 185, 135, 0.7) 0%, rgba(200, 170, 120, 0.25) 50%, transparent 75%);
-  filter: blur(40px);
-  animation: blobDrift1 12s ease-in-out infinite alternate;
+  top: -10%; left: 10%;
+  width: 70vw; height: 70vh;
+  background: radial-gradient(ellipse at center, rgba(180,140,90,0.22) 0%, rgba(140,100,60,0.08) 50%, transparent 75%);
+  filter: blur(60px);
+  animation: blobDrift1 16s ease-in-out infinite alternate;
 }
 
-/* Blob 2 — Warm sandy fill, bottom */
 .blob-2 {
-  bottom: -15%;
-  right: -5%;
-  width: 70vw;
-  height: 65vh;
-  background: radial-gradient(ellipse at center, rgba(210, 180, 130, 0.55) 0%, rgba(180, 150, 105, 0.2) 55%, transparent 75%);
-  filter: blur(45px);
-  animation: blobDrift2 15s ease-in-out infinite alternate;
+  bottom: -15%; right: -5%;
+  width: 65vw; height: 60vh;
+  background: radial-gradient(ellipse at center, rgba(160,120,75,0.18) 0%, transparent 70%);
+  filter: blur(65px);
+  animation: blobDrift2 20s ease-in-out infinite alternate;
 }
 
-/* Blob 3 — Bright cream highlight */
 .blob-3 {
-  top: 20%;
-  right: 0%;
-  width: 55vw;
-  height: 50vh;
-  background: radial-gradient(ellipse at center, rgba(235, 215, 175, 0.5) 0%, transparent 65%);
-  filter: blur(35px);
-  animation: blobDrift3 10s ease-in-out infinite alternate-reverse;
+  top: 20%; right: 0%;
+  width: 50vw; height: 45vh;
+  background: radial-gradient(ellipse at center, rgba(150,110,65,0.14) 0%, transparent 65%);
+  filter: blur(55px);
+  animation: blobDrift3 14s ease-in-out infinite alternate-reverse;
 }
 
-/* Blob 4 — Warm amber, left side */
 .blob-4 {
-  top: 40%;
-  left: -5%;
-  width: 50vw;
-  height: 50vh;
-  background: radial-gradient(ellipse at center, rgba(200, 170, 120, 0.5) 0%, transparent 60%);
-  filter: blur(40px);
-  animation: blobDrift4 8s ease-in-out infinite alternate;
+  top: 40%; left: -5%;
+  width: 45vw; height: 45vh;
+  background: radial-gradient(ellipse at center, rgba(140,100,60,0.14) 0%, transparent 60%);
+  filter: blur(60px);
+  animation: blobDrift4 12s ease-in-out infinite alternate;
 }
 
-/* Blob 5 — Subtle cool grey contrast, top */
 .blob-5 {
-  top: -10%;
-  right: 15%;
-  width: 40vw;
-  height: 40vh;
-  background: radial-gradient(ellipse at center, rgba(140, 135, 125, 0.3) 0%, transparent 60%);
-  filter: blur(45px);
-  animation: blobDrift5 14s ease-in-out infinite alternate-reverse;
+  top: -10%; right: 15%;
+  width: 35vw; height: 35vh;
+  background: radial-gradient(ellipse at center, rgba(100,80,55,0.1) 0%, transparent 60%);
+  filter: blur(55px);
+  animation: blobDrift5 18s ease-in-out infinite alternate-reverse;
 }
 
-/* ==========================================================
-   BLOB ANIMATIONS — Active, visible movement
-   ========================================================== */
 @keyframes blobDrift1 {
-  0% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
-    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
-  }
-  25% {
-    transform: translate(12vw, 10vh) scale(1.1) rotate(5deg);
-    border-radius: 60% 40% 30% 70% / 50% 60% 40% 50%;
-  }
-  50% {
-    transform: translate(-10vw, 18vh) scale(0.92) rotate(-6deg);
-    border-radius: 50% 50% 60% 40% / 60% 40% 50% 60%;
-  }
-  75% {
-    transform: translate(8vw, -10vh) scale(1.12) rotate(4deg);
-    border-radius: 35% 65% 55% 45% / 45% 55% 65% 35%;
-  }
-  100% {
-    transform: translate(-6vw, -8vh) scale(1.03) rotate(-3deg);
-    border-radius: 45% 55% 50% 50% / 55% 45% 55% 45%;
-  }
+  0%   { transform: translate(0,0) scale(1); }
+  50%  { transform: translate(8vw,12vh) scale(1.08); }
+  100% { transform: translate(-5vw,-6vh) scale(0.95); }
 }
-
 @keyframes blobDrift2 {
-  0% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
-  }
-  25% {
-    transform: translate(-14vw, -12vh) scale(1.15) rotate(-7deg);
-  }
-  50% {
-    transform: translate(10vw, -18vh) scale(0.85) rotate(9deg);
-  }
-  75% {
-    transform: translate(-7vw, 10vh) scale(1.08) rotate(-4deg);
-  }
-  100% {
-    transform: translate(5vw, 6vh) scale(0.95) rotate(3deg);
-  }
+  0%   { transform: translate(0,0) scale(1); }
+  50%  { transform: translate(-10vw,-8vh) scale(1.1); }
+  100% { transform: translate(5vw,5vh) scale(0.92); }
 }
-
 @keyframes blobDrift3 {
-  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  33% { transform: translate(-18vw, 12vh) scale(1.18) rotate(12deg); }
-  66% { transform: translate(10vw, -15vh) scale(0.82) rotate(-8deg); }
-  100% { transform: translate(8vw, 6vh) scale(1.08) rotate(4deg); }
+  0%   { transform: translate(0,0); }
+  50%  { transform: translate(-12vw,8vh); }
+  100% { transform: translate(6vw,-4vh); }
 }
-
 @keyframes blobDrift4 {
-  0% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(15vw, -20vh) scale(1.25); }
-  66% { transform: translate(-12vw, 10vh) scale(0.85); }
-  100% { transform: translate(6vw, -6vh) scale(1.12); }
+  0%   { transform: translate(0,0) scale(1); }
+  50%  { transform: translate(10vw,-12vh) scale(1.12); }
+  100% { transform: translate(-4vw,4vh) scale(0.9); }
 }
-
 @keyframes blobDrift5 {
-  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  33% { transform: translate(-10vw, 18vh) scale(1.15) rotate(-10deg); }
-  66% { transform: translate(14vw, -12vh) scale(0.85) rotate(7deg); }
-  100% { transform: translate(-5vw, 4vh) scale(1.08) rotate(-4deg); }
+  0%   { transform: translate(0,0); }
+  50%  { transform: translate(-8vw,10vh); }
+  100% { transform: translate(6vw,-8vh); }
 }

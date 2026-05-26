@@ -5,31 +5,31 @@ let tweens = [];
 const SERVICES = [
   {
     num: '01',
-    name: 'Branding',
-    tag: 'Identity Systems',
-    desc: 'We craft visual identities that are impossible to ignore. From strategy and naming to logo systems and brand guidelines — every element engineered to resonate with your audience and outlast trends.',
-    deliverables: ['Brand Strategy', 'Logo & Visual Identity', 'Typography & Color Systems', 'Brand Guidelines', 'Collateral Design'],
-  },
-  {
-    num: '02',
-    name: 'Web Design & Dev',
+    name: 'Web Pages',
     tag: 'Digital Experiences',
-    desc: 'We design and build websites that operate as your highest-performing sales asset. Immersive aesthetics, flawless performance, and conversion architecture — deployed on modern infrastructure that scales.',
+    desc: 'Sites conceived as a product, not a brochure. We design and build websites that operate as your highest-performing sales asset — immersive aesthetics, flawless performance, and conversion architecture deployed on modern infrastructure that scales.',
     deliverables: ['UI/UX Design', 'Custom Development', 'Shopify & E-Commerce', 'CMS Integration', 'Performance Optimization'],
   },
   {
+    num: '02',
+    name: 'Social Media',
+    tag: 'Organic & Paid',
+    desc: 'Organic growth and Meta Ads operating as a single engine. We build accounts that grow with discernment, not with dashboards — editorial systems that earn attention and convert it into community.',
+    deliverables: ['Content Strategy', 'Community Management', 'Meta Ads', 'Analytics & Reporting', 'Brand Voice'],
+  },
+  {
     num: '03',
-    name: 'Content Strategy',
+    name: 'Editorial Direction',
     tag: 'Multi-Platform',
-    desc: 'Content that earns attention and keeps it. We build editorial systems, produce high-value assets, and distribute your message across every relevant channel with the precision your brand deserves.',
-    deliverables: ['Content Roadmapping', 'Copywriting & Editing', 'SEO Content', 'Social Media Systems', 'Video & Visual Production'],
+    desc: 'Sustained content systems built for longevity. Voice, rhythm, and narrative — no one-off campaigns. We build editorial frameworks that distribute your message across every relevant channel with the precision your brand deserves.',
+    deliverables: ['Content Roadmapping', 'Copywriting & Editing', 'SEO Content', 'Visual Direction', 'Brand Guidelines'],
   },
   {
     num: '04',
-    name: 'Growth & Analytics',
+    name: 'Digital Infrastructure',
     tag: 'Revenue Optimization',
-    desc: 'We instrument your digital presence with the data infrastructure needed to make every decision confidently. Continuous optimization loops that compound improvements month over month.',
-    deliverables: ['Analytics Setup & Audit', 'SEO Strategy', 'Conversion Rate Optimization', 'A/B Testing', 'Performance Reporting'],
+    desc: 'The technical base that supports all of the above. Stable, measurable, proprietary. We instrument your digital presence with the data infrastructure needed to make every decision confidently — optimization loops that compound month over month.',
+    deliverables: ['Analytics Setup', 'SEO Strategy', 'Conversion Rate Optimization', 'A/B Testing', 'Performance Reporting'],
   },
 ];
 
@@ -54,26 +54,25 @@ export function mount(container) {
 
   container.innerHTML = `
     <div class="view-page services-page" role="main" aria-label="Services">
+      <div class="view-page-inner">
 
-      <!-- ── HERO TEXT ── -->
-      <div class="view-hero-text">
-        <p class="section-eyebrow" data-i18n="servicesEyebrow">What We Do</p>
-        <h1 data-i18n="servicesPageTitle">Engineered<br>for Impact</h1>
-        <p class="section-sub" data-i18n="servicesPageSub">Comprehensive solutions designed to elevate your digital presence and drive measurable business growth.</p>
+        <div class="view-hero-text">
+          <span class="section-eyebrow">What We Do</span>
+          <h1>Engineered<br>for Impact</h1>
+          <p class="section-sub">Four fronts that work together as a single system.</p>
+        </div>
+
+        <div class="services-list services-list--page">
+          ${items}
+        </div>
+
+        <div class="svc-page-cta">
+          <h2>Ready to start a project?</h2>
+          <p>Tell us about your vision and we'll tell you exactly how we'll bring it to life.</p>
+          <a href="#contact" data-route="#contact" class="btn-main">Transform My Business</a>
+        </div>
+
       </div>
-
-      <!-- ── SERVICES LIST ── -->
-      <div class="services-list services-list--page">
-        ${items}
-      </div>
-
-      <!-- ── CTA ── -->
-      <div class="svc-page-cta">
-        <h2 data-i18n="svcCtaTitle">Ready to start a project?</h2>
-        <p data-i18n="svcCtaSub">Tell us about your vision and we'll tell you exactly how we'll bring it to life.</p>
-        <a href="#contact" data-route="#contact" class="btn-main" data-i18n="ctaBtn">Transform My Business</a>
-      </div>
-
     </div>
   `;
 

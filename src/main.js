@@ -4,11 +4,9 @@
 
 // Import all CSS modules (Vite bundles them automatically)
 import './styles/base.css';
+import './styles/mesh-gradient.css';
 import './styles/nav.css';
 import './styles/layout.css';
-import './styles/bento.css';
-import './styles/cta.css';
-import './styles/mesh-gradient.css';
 import './styles/responsive.css';
 
 // Import core modules
