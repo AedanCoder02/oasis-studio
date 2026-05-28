@@ -115,7 +115,7 @@ function setupScrollColorJourney() {
   return () => {
     window.removeEventListener('scroll', onScroll);
     cancelAnimationFrame(raf);
-    ambientBg.style.background = '';
+    ambientBg.style.background = '#1A130E';
   };
 }
 
