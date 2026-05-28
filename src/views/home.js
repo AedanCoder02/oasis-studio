@@ -4,6 +4,7 @@
 let observers = [];
 let tiltCleanup = null;
 let heroMorphCleanup = null;
+let colorJourneyCleanup = null;
 
 // ---------------------------------------------------------------------------
 // Work card helper
@@ -43,6 +44,79 @@ function hexToRgba(hex, alpha) {
   const g = parseInt(hex.slice(3,5),16);
   const b = parseInt(hex.slice(5,7),16);
   return `rgba(${r},${g},${b},${alpha})`;
+}
+
+function hexToRgb(hex) {
+  return [parseInt(hex.slice(1,3),16), parseInt(hex.slice(3,5),16), parseInt(hex.slice(5,7),16)];
+}
+
+function lerpRgb(a, b, t) {
+  return [
+    Math.round(a[0] + (b[0]-a[0])*t),
+    Math.round(a[1] + (b[1]-a[1])*t),
+    Math.round(a[2] + (b[2]-a[2])*t),
+  ];
+}
+
+function setupScrollColorJourney() {
+  const STOPS = [
+    { sel: '#hero',        hex: '#BCA478' },
+    { sel: '#about-home',  hex: '#1A0A22' },
+    { sel: '#what-we-do',  hex: '#130622' },
+    { sel: '#pillars',     hex: '#071510' },
+    { sel: '#work',        hex: '#0D1520' },
+    { sel: '#case-miami',  hex: '#060c1c' },
+    { sel: '#dash-miami',  hex: '#060c1c' },
+    { sel: '#case-kimona', hex: '#170508' },
+    { sel: '#dash-kimona', hex: '#12050A' },
+    { sel: '#cta',         hex: '#060c1c' },
+  ];
+
+  const ambientBg = document.querySelector('.ambient-background');
+  if (!ambientBg) return () => {};
+
+  const resolved = STOPS
+    .map(s => ({ el: document.querySelector(s.sel), rgb: hexToRgb(s.hex) }))
+    .filter(s => s.el);
+
+  if (resolved.length < 2) return () => {};
+
+  let raf = null;
+  let dirty = false;
+  const onScroll = () => { dirty = true; };
+
+  const tick = () => {
+    if (dirty) {
+      dirty = false;
+      const sample = window.scrollY + window.innerHeight * 0.5;
+      let color = resolved[0].rgb;
+
+      for (let i = 0; i < resolved.length - 1; i++) {
+        const a = resolved[i];
+        const b = resolved[i + 1];
+        const aTop = a.el.offsetTop;
+        const bTop = b.el.offsetTop;
+        if (sample <= aTop) { color = a.rgb; break; }
+        if (sample >= bTop) { color = b.rgb; continue; }
+        const t = Math.max(0, Math.min(1, (sample - aTop) / (bTop - aTop)));
+        color = lerpRgb(a.rgb, b.rgb, t);
+        break;
+      }
+
+      ambientBg.style.background = `rgb(${color[0]},${color[1]},${color[2]})`;
+    }
+    raf = requestAnimationFrame(tick);
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  dirty = true;
+  raf = requestAnimationFrame(tick);
+
+  return () => {
+    window.removeEventListener('scroll', onScroll);
+    cancelAnimationFrame(raf);
+    ambientBg.style.background = '';
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -508,7 +582,10 @@ export function mount(container) {
   setupScrollReveal(container);
   setupCardTilt(container);
   heroMorphCleanup = setupHeroLogoMorph();
-  requestAnimationFrame(() => setupBarAnimations());
+  requestAnimationFrame(() => {
+    setupBarAnimations();
+    colorJourneyCleanup = setupScrollColorJourney();
+  });
 }
 
 export function unmount() {
@@ -516,4 +593,5 @@ export function unmount() {
   observers = [];
   if (tiltCleanup) { tiltCleanup(); tiltCleanup = null; }
   if (heroMorphCleanup) { heroMorphCleanup(); heroMorphCleanup = null; }
+  if (colorJourneyCleanup) { colorJourneyCleanup(); colorJourneyCleanup = null; }
 }
