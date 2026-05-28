@@ -243,11 +243,12 @@
 }
 
 .work-grid-card {
-  background: var(--ink);
+  background: rgba(26,19,14,0.68);
   cursor: pointer;
   transition: background var(--motion-normal) ease;
+  backdrop-filter: blur(2px);
 }
-.work-grid-card:hover { background: rgba(26,19,14,0.6); }
+.work-grid-card:hover { background: rgba(26,19,14,0.45); }
 
 .wgc-link {
   display: block;
@@ -489,7 +490,7 @@
   font-size: 10px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--dim);
+  color: rgba(237,227,208,0.6);
   display: block;
   margin-bottom: 6px;
 }
@@ -508,22 +509,23 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1px;
-  background: var(--rule);
+  background: rgba(58,47,36,0.35);
 }
 
 .dash-card {
-  background: var(--ink-deep);
+  background: rgba(18,12,8,0.62);
   padding: 28px 24px;
+  backdrop-filter: blur(2px);
 }
 
-.dash-card--ink { background: var(--ink); }
+.dash-card--ink { background: rgba(26,19,14,0.62); }
 
 .dash-card-title {
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--dim);
+  color: rgba(237,227,208,0.55);
   margin-bottom: 24px;
   display: block;
 }
