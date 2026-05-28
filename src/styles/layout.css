@@ -509,16 +509,15 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1px;
-  background: rgba(58,47,36,0.35);
+  background: rgba(58,47,36,0.25);
 }
 
 .dash-card {
-  background: rgba(18,12,8,0.62);
+  background: rgba(10,6,3,0.28);
   padding: 28px 24px;
-  backdrop-filter: blur(2px);
 }
 
-.dash-card--ink { background: rgba(26,19,14,0.62); }
+.dash-card--ink { background: rgba(15,9,5,0.28); }
 
 .dash-card-title {
   font-family: var(--font-mono);
