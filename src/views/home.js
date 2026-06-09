@@ -302,7 +302,7 @@ function getTemplate() {
         <span class="ed-label">Selected Work</span>
         <h2 class="ed-h2 reveal" style="margin-bottom:3rem">Built for the bold.</h2>
         <div class="work-grid">
-          ${workCard('https://kimonatelier.com/', 'Kimona Telier', 'E-Commerce · Shopify', '#f2b880')}
+          ${workCard('https://kimonatelier.com/', 'Kimona Atelier', 'E-Commerce · Shopify', '#f2b880')}
           ${workCard('https://www.thelegacyholding.com/', 'The Legacy Holding', 'Corporate · Real Estate', '#B1D5F7')}
           ${workCard('https://by0gch-qd.myshopify.com/', 'Oasis Yacht Club', 'Luxury · Marine', '#ffd2fc')}
           ${workCard('https://universe-media-two.vercel.app/', 'Universe Media', 'News · Digital Media', '#B1D5F7')}
@@ -440,7 +440,7 @@ function getTemplate() {
         <div class="case-layout">
           <div class="case-left">
             <span class="ed-label">Case · @kimonatelier</span>
-            <h2 class="case-h2 reveal">Kimona Telier</h2>
+            <h2 class="case-h2 reveal">Kimona Atelier</h2>
             <p class="case-scope">Editorial · Digital · Brand</p>
             <p class="case-one-liner reveal">House of kimonos and contemporary garments. We assumed management of the account in March 2026: editorial direction, content system, and shop functioning as a single piece.</p>
             <a href="https://www.instagram.com/kimonatelier/" target="_blank" rel="noopener noreferrer" class="case-link">View on Instagram ↗</a>
